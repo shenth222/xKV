@@ -28,3 +28,4 @@ pytorch-lightning==2.0.7
 wheel
 Cython
 nemo_toolkit[all]==1.23
+nltk==3.8.1
