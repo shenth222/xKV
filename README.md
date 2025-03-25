@@ -44,7 +44,7 @@ cd xKV
 conda create -n xKV python=3.10
 conda activate xKV
 
-# cuda-toolkit (optional if your system have already had it)
+# cuda-toolkit (optional if your system doesn't have it)
 conda install -y nvidia/label/cuda-12.4.0::cuda-toolkit
 conda install -y nvidia::cuda-cudart-dev
 
