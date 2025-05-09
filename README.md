@@ -101,6 +101,14 @@ This command enables the MiniCache approach by specifying `--layer_merge_impl sl
 CUDA_VISIBLE_DEVICES=0,1,2,3 OMP_NUM_THREADS=48 torchrun --standalone --nnodes=1 --nproc_per_node 4 evaluate/eval_acc.py --datalen 65536 --batch_size 1 --dataset_name "ruler/niah_single_1,ruler/niah_single_2,ruler/niah_multikey_1,ruler/niah_multikey_2,ruler/niah_multiquery,ruler/niah_multivalue,ruler/vt,ruler/fwe,ruler/qa_1,ruler/qa_2" --model_name_or_path meta-llama/Meta-Llama-3.1-8B-Instruct --xKV --merge_k --merge_v --layer_merge_impl slerp --layer_group_size 2 --start_layer_idx 16 --end_layer_idx 31
 ```
 
+#### Customized Merge Config
+We also support customized merge config by providing a yaml file to the `--customized_merge_config` argument. By writing a yaml file you can experiment with different merging groups and different ranks for each group. Please refer to the [configs/example.yaml](configs/example.yaml) for the format. 
+```
+CUDA_VISIBLE_DEVICES=0,1,2,3 OMP_NUM_THREADS=48 torchrun --standalone --nnodes=1 --nproc_per_node 4 evaluate/eval_acc.py --datalen 65536 --batch_size 1 --dataset_name "ruler/niah_single_1" --model_name_or_path meta-llama/Meta-Llama-3.1-8B-Instruct --xKV --customized_merge_config e
+xample.yaml 
+```
+
+
 ### Evalaution on DeepSeek Models
 DeepSeek’s MLA (multi-latent attention) architecture has two types of hidden states that can be cached during inference:
 + Non-RoPE Latents (the learned, position-agnostic latent vectors).
