@@ -80,7 +80,10 @@ def main(args):
         f.write(yaml_str)
 
 if __name__ == "__main__":
-
+    """
+    Usage:
+    python group_layers.py --cka_similarity l31-8b-ruler-mv-cka.pt --verbose --weighted_by_index
+    """
     parser = argparse.ArgumentParser(description="Cluster layers using SpectralClustering based on similarity matrix.")
 
     parser.add_argument(
