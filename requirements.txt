@@ -1,3 +1,4 @@
+Cython
 click==8.0.2
 datasets==2.19.2
 einops==0.8.0
@@ -26,7 +27,6 @@ evaluate
 hydra-core==1.3.2
 pytorch-lightning==2.0.7
 wheel
-Cython
 nemo_toolkit[all]==1.23
 nltk==3.8.1
 seaborn
