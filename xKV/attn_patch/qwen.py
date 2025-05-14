@@ -53,7 +53,7 @@ def xKV_qwen2_forward(
         else:
             if kwargs.get("output_attentions", False):
                 logger.warning_once(
-                    "`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`..'
+                    "`torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`."
                 )
 
         attention_interface = ALL_ATTENTION_FUNCTIONS["sdpa"]
