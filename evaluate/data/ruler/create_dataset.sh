@@ -10,7 +10,7 @@
 
 # Model and Tokenizer
 SEQ_LENGTHS=(
-    65536
+    8192
     #131072
 )
 

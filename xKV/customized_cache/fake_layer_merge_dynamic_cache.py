@@ -1,7 +1,7 @@
 import torch
 from transformers.cache_utils import DynamicCache
 import gc
-
+from loguru import logger
 from transformers.models.mistral.modeling_mistral import (
     apply_rotary_pos_emb,
 )
@@ -156,6 +156,7 @@ class FakeLayerMergingCache(DynamicCache):
     def grouped_layer_merging(self, last_layer_idx):
         """Perform fake SVD on grouped layers, inferring dimensions from the tensors."""
         group_info = self.merge_setup.get_group_for_layer(last_layer_idx)
+        logger.info("Group info: {}".format(group_info))
         if group_info is None:
             return  # No valid group found
         start_layer_idx, end_layer_idx = group_info.layers[0], group_info.layers[-1]       

@@ -66,7 +66,8 @@ class Evaluator:
                     scores.append(max([dataset.metric(pred, g, classes) for g in gt]))
             else:
                 #rets = llm.generate(**(prompt.to(llm.device)), max_new_tokens=dataset.gen_len, top_p=1.0, temperature=0.0, num_logits_to_keep=1, do_sample=False, pad_token_id=tokenizer.eos_token_id)
-                rets = llm.generate(**(prompt.to(llm.device)), max_new_tokens=dataset.gen_len, top_p=1.0, temperature=0.0, do_sample=False, pad_token_id=tokenizer.eos_token_id)
+                with torch.no_grad():
+                    rets = llm.generate(**(prompt.to(llm.device)), max_new_tokens=dataset.gen_len, top_p=1.0, temperature=0.0, do_sample=False, pad_token_id=tokenizer.eos_token_id)
                 rets = [tokenizer.decode(rets[0][prompt.input_ids.shape[-1]:], skip_special_tokens=True)]
                 for (pred, gt) in zip(rets, dataset.gt[i*bsz:(i+1)*bsz]):
                     if isinstance(gt, list):

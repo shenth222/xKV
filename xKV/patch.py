@@ -22,8 +22,10 @@ def prepare_cache(method: str, config):
         #config.num_layers = self.config.num_hidden_layers
         if cache_obj is None:
             model_kwargs["past_key_values"] = DynamicCache()
+            logger.info("Cache obj: DynamicCache")
         else:
             model_kwargs["past_key_values"] = cache_obj(config)
+            logger.info("Cache obj: FakeLayerMergingCache")
 
     return _prepare_cache_for_generation
 

@@ -232,6 +232,10 @@ class Dataset:
                 model_dir = 'phi'
             elif 'deepseek' in self.tokenizer.name_or_path.lower():
                 model_dir = 'deepseek'
+            elif 'llama' in self.tokenizer.name_or_path.lower():
+                model_dir = 'llama'
+            elif 'smollm' in self.tokenizer.name_or_path.lower():
+                model_dir = 'llama'
             else:
                 raise Exception("Model not found", self.tokenizer.name_or_path)
 
