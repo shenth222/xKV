@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 import types
 import torch.nn as nn
 import torch
@@ -8,7 +8,8 @@ from transformers.models.llama.modeling_llama import (
     LlamaSdpaAttention,
     apply_rotary_pos_emb,
     repeat_kv,
-    LlamaForCausalLM
+    LlamaForCausalLM,
+    LlamaModel
 )
 
 from transformers.cache_utils import Cache
@@ -51,18 +52,7 @@ def xKV_llama_sdpa_forward(
             #NOTE(brian1009): In our customized cache, we will perform different kind of compression methods
             # To boost performance, we will not use the kv returned from the cache, but instead use the original KV
             assert isinstance(past_key_value, FakeLayerMergingCache)
-            import torch
-            import torch.nn as nn
-            import torch.optim as optim
-            from torch.profiler import profile, record_function, ProfilerActivity
-            with profile(
-                activities=[ProfilerActivity.CUDA],
-                on_trace_ready=torch.profiler.tensorboard_trace_handler('./log'),
-                record_shapes=True,
-                profile_memory=True,
-                with_stack=True
-            ) as prof:
-                past_key_value.update(key_states, value_states, self.layer_idx, mode='prefill', cos=cos, sin=sin)
+            past_key_value.update(key_states, value_states, self.layer_idx, mode='prefill', cos=cos, sin=sin)
             key_states, _ = apply_rotary_pos_emb(key_states, key_states, cos, sin)
         else:
             key_states, _ = apply_rotary_pos_emb(key_states, key_states, cos, sin)
